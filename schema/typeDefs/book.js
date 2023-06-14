@@ -8,6 +8,7 @@ type Book{
 
 type SaleInfo{
     retailPrice:Price
+    saleability: String
 }
 
 type volumeInfo{
