@@ -8,7 +8,9 @@ const bookQueryResolvers = {
       try {
         const { data } = await axios.get(
           `https://www.googleapis.com/books/v1/volumes?q=${name}&startIndex=${index}&maxResults=10${
-            filter !== undefined && filter !== "undefined" ? `&filter=${filter}` : ""
+            filter !== undefined && filter !== "undefined"
+              ? `&filter=${filter}`
+              : ""
           }&key=AIzaSyDkzo5BRUkNKq02Md324-U75Jqv_U21DW4`
         );
         return data.items;
@@ -23,6 +25,24 @@ const bookQueryResolvers = {
           `https://www.googleapis.com/books/v1/volumes/${id}`
         );
         return data;
+      } catch (error) {
+        return { code: 500, message: "cant not fetch the requested book" };
+      }
+    },
+    bookById: async (parent, args) => {
+      const { ids } = args;
+      console.log(ids, "ids");
+      let array = [];
+      try {
+        await Promise.all(
+          ids.map(async (id) => {
+            const { data } = await axios.get(
+              `https://www.googleapis.com/books/v1/volumes/${id}`
+            );
+            array.push(data);
+          })
+        );
+        return array;
       } catch (error) {
         return { code: 500, message: "cant not fetch the requested book" };
       }

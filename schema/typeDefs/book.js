@@ -34,6 +34,7 @@ type Price{
 type Query {
     books(name: String!, index: Int!, filter: String): [Book!]!
     book(id: ID!): Book!
+    bookById(ids:[ID] ): [Book]
 }
 
 `;
