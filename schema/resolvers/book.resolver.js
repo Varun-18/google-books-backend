@@ -44,7 +44,7 @@ const bookQueryResolvers = {
         );
         return array;
       } catch (error) {
-        return { code: 500, message: "cant not fetch the requested book" };
+        throw { code: 429, message: "Too many requests..!!" };
       }
     },
   },
